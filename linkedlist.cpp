@@ -36,7 +36,7 @@ void display(struct node *start)
         printf("linked list is empty\n");
     }
     struct node *ptr = start;
-    printf("\n\n\nDisplaying linked list....");
+    printf("\n\n\nDisplaying linked list....\n");
     while (ptr != NULL)
     {
         printf("%d  \n", ptr->data);
@@ -88,40 +88,57 @@ void delete_from_location(struct node *start, int loc)
     }
 }
 
-void delete_from_beginning(struct node *start)
+// void delete_from_beginning(struct node *start)
+// {
+//     if (start == NULL)
+//     {
+//         printf("list is empty");
+//     }
+//     else if (start->next == NULL)
+//     {
+//         struct node *temp = start;
+//         start = NULL;
+//         free(temp);
+//     }
+//     else
+//     {
+//         struct node *temp = start;
+//         start = start->next;
+//         free(temp);
+//     }
+// }
+
+
+void delete_from_beginning(struct node **start)
 {
-    if (start == NULL)
+    if (*start == NULL)
     {
-        printf("list is empty");
-    }
-    else if (start->next == NULL)
-    {
-        struct node *temp = start;
-        start = NULL;
-        free(temp);
+        printf("list is empty\n");
+        return;
     }
     else
     {
-        struct node *temp = start;
-        start = start->next;
-        free(temp);
+        struct node *temp = *start;
+        *start = (*start)->next; // Move start to the next node
+        free(temp);              // Free the old start node
     }
 }
 
-void insert_at_beginning(struct node *start, int data)
+void insert_at_beginning(struct node **start, int data)
 {
     struct node *new_node;
     new_node = (struct node *)malloc(sizeof(struct node));
     new_node->data = data;
-    if (start == NULL)
-    {
-        new_node->next = NULL;
-    }
-    else
-    {
-        new_node->next = start;
-    }
-    start = new_node;
+    // if (start == NULL)
+    // {
+    //     new_node->next = NULL;
+    // }
+    // else
+    // {
+    //     new_node->next = start;
+    // }
+    new_node->next = *start;
+    *start = new_node;
 }
 
 void insert_at_location(struct node *start, int loc, int val)
@@ -164,20 +181,38 @@ void count_nodes(struct node *start)
     printf("there are total %d nodes in the linked list.\n", count);
 }
 
-void reverse_linked_list(struct node *start)
-{
-    struct node *q, *r, *s;
-    q = start;
-    s = NULL;
-    while (q->next != NULL)
-    {
+// void reverse_linked_list(struct node *start)
+// {
+//     struct node *q, *r, *s;
+//     q = start;
+//     s = NULL;
+//     while (q->next != NULL)
+//     {
 
-        r = q->next;
-        q->next = s;
-        s = q;
-        q = r;
+//         r = q->next;
+//         q->next = s;
+//         s = q;
+//         q = r;
+//     }
+//     start = q;
+// }
+
+
+void reverse_linked_list(struct node **start)
+{
+    struct node *prev = NULL;
+    struct node *current = *start;
+    struct node *next = NULL;
+
+    while (current != NULL)
+    {
+        next = current->next;  // Store next node
+        current->next = prev;  // Reverse the current node's pointer
+        prev = current;        // Move prev to current
+        current = next;        // Move to the next node
     }
-    start = q;
+
+    *start = prev;  // Update the start pointer to the new head (last node)
 }
 
 int takeinput()
@@ -213,7 +248,7 @@ int main()
         {
             printf("Inserting at the beginning...\n");
             num = takeinput();
-            insert_at_beginning(start, num);
+            insert_at_beginning(&start, num);
             printf("\n\n");
             break;
         }
@@ -239,7 +274,7 @@ int main()
         }
         case 5:
             printf("Deleting from the beginning...\n");
-            delete_from_beginning(start);
+            delete_from_beginning(&start);
             printf("\n\n");
             break;
         case 6:
@@ -262,7 +297,7 @@ int main()
             break;
         case 9:
             printf("Reversing the linked list");
-            reverse_linked_list(start);
+            reverse_linked_list(&start);
             display(start);
             printf("\n\n");
             break;
