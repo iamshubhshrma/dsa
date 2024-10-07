@@ -74,7 +74,7 @@ void insert_at_end(struct node *start, int num)
         new_node->next = NULL;
         start = new_node;
     }
-    else if (start != NULL)
+    else
     {
         new_node = (struct node *)malloc(sizeof(struct node));
         new_node->data = num;
@@ -106,6 +106,10 @@ void display(struct node *start)
 int main()
 {
     struct node *start = NULL;
+    start = (struct node *)malloc(sizeof(struct node));
+    start->data = 45;
+    start->prev = NULL;
+    start->next = NULL;
     insert_at_end(start, 20);
     insert_at_begin(start, 21);
     insert_at_end(start, 28);
