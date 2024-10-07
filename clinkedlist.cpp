@@ -34,11 +34,11 @@ void display()
     {
         printf("empty circular linked list");
     }
-    while (temp != last)
+    do
     {
         printf("%d \n", temp->data);
         temp = temp->next;
-    }
+    } while (temp != last);
 }
 
 int takeinput()
