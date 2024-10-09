@@ -8,6 +8,70 @@ struct node
 
 struct node *start, *last;
 
+void delete_from_end()
+{
+    if (start == NULL)
+    {
+        printf("empty circlular linked list");
+    }
+    else if (start == last)
+    {
+        start->next == NULL;
+        start->data = NULL;
+        free(start);
+    }
+    else
+    {
+        struct node *temp = start;
+        while (temp->next != last)
+        {
+            temp = temp->next;
+        }
+        temp->next = start;
+        last = temp;
+    }
+}
+
+void delete_from_beginning()
+{
+    if (start == NULL)
+    {
+        printf("empty circlular linked list");
+    }
+    else if (start == last)
+    {
+        start->next == NULL;
+        start->data = NULL;
+        free(start);
+    }
+    else
+    {
+        struct node *temp = start;
+        start = start->next;
+        last->next = start;
+        free(temp);
+    }
+}
+
+void insert_at_end(int data)
+{
+    struct node *new_node;
+    new_node = (struct node *)malloc(sizeof(struct node));
+    new_node->data = data;
+    if (start == NULL)
+    {
+        start = new_node;
+        last = new_node;
+        last->next = start;
+    }
+    else
+    {
+        last->next = new_node;
+        last = new_node;
+        last->next = start;
+    }
+}
+
 void insert_at_beginning(int data)
 {
     struct node *new_node;
@@ -73,14 +137,14 @@ int main()
             break;
         }
 
-        // case 3:
-        // {
-        //     printf("Inserting at the end...\n");
-        //     int num1 = takeinput();
-        //     insertatend(start, num1);
-        //     printf("\n\n");
-        //     break;
-        // }
+        case 3:
+        {
+            printf("Inserting at the end...\n");
+            num = takeinput();
+            insert_at_end(num);
+            printf("\n\n");
+            break;
+        }
         // case 4:
         // {
         //     printf("Inserting at location...\n");

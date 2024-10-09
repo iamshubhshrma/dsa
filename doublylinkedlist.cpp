@@ -7,13 +7,15 @@ struct node
     struct node *next;
 };
 
-void delete_from_begin(struct node *start)
+struct node *start = NULL;
+
+void delete_from_begin()
 {
     start = start->next;
     start->prev = NULL;
 }
 
-void delete_from_end(struct node *start)
+void delete_from_end()
 {
     struct node *temp = start;
     while (temp != NULL)
@@ -24,7 +26,7 @@ void delete_from_end(struct node *start)
     free(temp);
 }
 
-void insert_at_loc(struct node *start, int loc, int data)
+void insert_at_loc(int loc, int data)
 {
     struct node *temp, *new_node;
     temp = start;
@@ -43,7 +45,7 @@ void insert_at_loc(struct node *start, int loc, int data)
     temp->next = new_node;
 }
 
-void insert_at_begin(struct node *start, int data)
+void insert_at_begin(int data)
 {
     struct node *new_node;
     if (start == NULL)
@@ -64,7 +66,7 @@ void insert_at_begin(struct node *start, int data)
     }
 }
 
-void insert_at_end(struct node *start, int num)
+void insert_at_end(int num)
 {
     struct node *new_node;
     if (start == NULL)
@@ -88,18 +90,21 @@ void insert_at_end(struct node *start, int num)
     }
 }
 
-void display(struct node *start)
+void display()
 {
     struct node *temp = start;
     if (temp == NULL)
     {
         printf("empty doublylinked list");
     }
-    while (temp != NULL)
+    while (temp->next != NULL)
     {
-        printf("%d", temp->data);
-        temp = temp->next;
-        printf("hello from print\n");
+        if (temp->next != NULL)
+        {
+            printf("%d", temp->data);
+            temp = temp->next;
+            printf("hello from print\n");
+        }
     }
 }
 
@@ -110,10 +115,10 @@ int main()
     start->data = 45;
     start->prev = NULL;
     start->next = NULL;
-    insert_at_end(start, 20);
-    insert_at_begin(start, 21);
-    insert_at_end(start, 28);
-    insert_at_loc(start, 1, 13);
-    display(start);
+    insert_at_end(20);
+    insert_at_begin(21);
+    insert_at_end(28);
+    // insert_at_loc(1, 13);
+    display();
     return 0;
 }

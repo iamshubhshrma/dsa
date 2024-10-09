@@ -6,12 +6,12 @@ struct node
     struct node *next;
 };
 
-void insertatend(struct node *start, int data)
+struct node *start;
+
+void insertatend(int data)
 {
     struct node *new_node;
     new_node = (struct node *)malloc(sizeof(struct node));
-    // printf("enter value for data : ");
-    // scanf("%d", &new_node->data);
     new_node->data = data;
     new_node->next = NULL;
     if (start == NULL)
@@ -32,22 +32,43 @@ void insertatend(struct node *start, int data)
     }
 }
 
-void display(struct node *start)
+void insert_at_beginning(int data)
 {
-    if (start == NULL)
+    struct node *new_node;
+    new_node = (struct node *)malloc(sizeof(struct node));
+    new_node->data = data;
+    new_node->next = start;
+    start = new_node;
+}
+
+void insert_at_location(int loc, int val)
+{
+    struct node *temp = start;
+    if (temp == NULL)
     {
-        printf("linked list is empty\n");
+        printf("\n\nCannot insert in empty list\n\n");
+        return;
     }
-    struct node *ptr = start;
-    printf("\n\n\nDisplaying linked list....\n");
-    while (ptr != NULL)
+
+    for (int i = 1; i < loc - 1; i++)
     {
-        printf("%d  \n", ptr->data);
-        ptr = ptr->next;
+        temp = temp->next;
+    }
+    if (temp == NULL)
+    {
+        printf("location out of linked list");
+    }
+    else
+    {
+        struct node *new_node;
+        new_node = (struct node *)malloc(sizeof(struct node));
+        new_node->data = val;
+        new_node->next = temp->next;
+        temp->next = new_node;
     }
 }
 
-void delete_from_end(struct node *start)
+void delete_from_end()
 {
     if (start == NULL)
     {
@@ -71,107 +92,76 @@ void delete_from_end(struct node *start)
     }
 }
 
-void delete_from_location(struct node *start, int loc)
+void delete_from_beginning()
 {
     if (start == NULL)
     {
-        printf("empty list\n");
+        printf("\n\nThe linked list is empty\n\n");
+        return;
     }
     else
     {
         struct node *temp = start;
-        struct node *current = start;
-        for (int i = 1; i < loc - 1; i++)
+        start = (start)->next; // Move start to the next node
+        free(temp);            // Free the old start node
+    }
+}
+
+void delete_from_location(int loc)
+{
+    if (start == NULL)
+    {
+        printf("\n\nThe linked list is empty\n\n");
+        return;
+    }
+    struct node *temp = start;
+    struct node *current = NULL;
+
+    if (loc == 1)
+    {
+        printf("\n\nIf you want to delete the first element, use the delete from beginning function!\n\n");
+        return;
+    }
+    else
+    {
+        for (int i = 1; i < loc; i++)
         {
             current = temp;
-            temp = temp->next;
+            if (temp->next != NULL)
+            {
+                temp = temp->next;
+            }
+            else
+            {
+                printf("\nLocation not valid\n");
+            }
+        }
+        if (temp == NULL)
+        {
+            printf("\n\nThe location is out of linked list\n\n");
+            return;
         }
         current->next = temp->next;
         free(temp);
     }
 }
 
-// void delete_from_beginning(struct node *start)
-// {
-//     if (start == NULL)
-//     {
-//         printf("list is empty");
-//     }
-//     else if (start->next == NULL)
-//     {
-//         struct node *temp = start;
-//         start = NULL;
-//         free(temp);
-//     }
-//     else
-//     {
-//         struct node *temp = start;
-//         start = start->next;
-//         free(temp);
-//     }
-// }
-
-void delete_from_beginning(struct node **start)
+void display()
 {
-    if (*start == NULL)
+    if (start == NULL)
     {
-        printf("list is empty\n");
-        return;
+        printf("linked list is empty\n");
     }
-    else
+    struct node *ptr = start;
+    printf("\n\n\nDisplaying linked list....\n");
+    while (ptr != NULL)
     {
-        struct node *temp = *start;
-        *start = (*start)->next; // Move start to the next node
-        free(temp);              // Free the old start node
+        printf("%d  \n", ptr->data);
+        ptr = ptr->next;
     }
 }
 
-void insert_at_beginning(struct node **start, int data)
-{
-    struct node *new_node;
-    new_node = (struct node *)malloc(sizeof(struct node));
-    new_node->data = data;
-    // if (start == NULL)
-    // {
-    //     new_node->next = NULL;
-    // }
-    // else
-    // {
-    //     new_node->next = start;
-    // }
-    new_node->next = *start;
-    *start = new_node;
-}
-
-void insert_at_location(struct node *start, int loc, int val)
-{
-    struct node *temp = start;
-    for (int i = 1; i < loc - 1; i++)
-    {
-        if (temp == NULL)
-        {
-            printf("temp is null");
-        }
-        else
-        {
-            temp = temp->next;
-        }
-    }
-    if (temp == NULL)
-    {
-        printf("location out of linked list");
-    }
-    else
-    {
-        struct node *new_node;
-        new_node = (struct node *)malloc(sizeof(struct node));
-        new_node->data = val;
-        new_node->next = temp->next;
-        temp->next = new_node;
-    }
-}
-
-void count_nodes(struct node *start)
+void count_nodes()
 {
     int count = 0;
     struct node *temp = start;
@@ -183,26 +173,10 @@ void count_nodes(struct node *start)
     printf("there are total %d nodes in the linked list.\n", count);
 }
 
-// void reverse_linked_list(struct node *start)
-// {
-//     struct node *q, *r, *s;
-//     q = start;
-//     s = NULL;
-//     while (q->next != NULL)
-//     {
-
-//         r = q->next;
-//         q->next = s;
-//         s = q;
-//         q = r;
-//     }
-//     start = q;
-// }
-
-void reverse_linked_list(struct node **start)
+void reverse_linked_list()
 {
     struct node *prev = NULL;
-    struct node *current = *start;
+    struct node *current = start;
     struct node *next = NULL;
 
     while (current != NULL)
@@ -213,7 +187,7 @@ void reverse_linked_list(struct node **start)
         current = next;       // Move to the next node
     }
 
-    *start = prev; // Update the start pointer to the new head (last node)
+    start = prev; // Update the start pointer to the new head (last node)
 }
 
 int takeinput()
@@ -226,14 +200,7 @@ int takeinput()
 
 int main()
 {
-    // Write C++ code here
     printf("linked list program : \n");
-    struct node *start = NULL;
-    start = (struct node *)malloc(sizeof(struct node));
-
-    start->data = 45;
-    start->next = NULL;
-
     while (1)
     {
         printf("What do you want to do? \nChoose your option \n1 - Display linked list\n2 - Insert at the beginning\n3 - Insert at the end\n4 - Insert at a specific location\n5 - Delete from the beginning\n6 - Delete from the end\n7 - Delete from a specific location\n8 - Count the number of nodes\n9 - Reverse the linked list\n10 - Exit\n");
@@ -242,14 +209,14 @@ int main()
         switch (ch)
         {
         case 1:
-            display(start);
+            display();
             printf("\n\n");
             break;
         case 2:
         {
             printf("Inserting at the beginning...\n");
             num = takeinput();
-            insert_at_beginning(&start, num);
+            insert_at_beginning(num);
             printf("\n\n");
             break;
         }
@@ -258,7 +225,7 @@ int main()
         {
             printf("Inserting at the end...\n");
             int num1 = takeinput();
-            insertatend(start, num1);
+            insertatend(num1);
             printf("\n\n");
             break;
         }
@@ -269,18 +236,18 @@ int main()
             loc = takeinput();
             printf("Number to be inserted, ");
             num = takeinput();
-            insert_at_location(start, loc, num);
+            insert_at_location(loc, num);
             printf("\n\n");
             break;
         }
         case 5:
             printf("Deleting from the beginning...\n");
-            delete_from_beginning(&start);
+            delete_from_beginning();
             printf("\n\n");
             break;
         case 6:
             printf("Deleting from the end...\n");
-            delete_from_end(start);
+            delete_from_end();
             printf("\n\n");
             break;
         case 7:
@@ -288,18 +255,18 @@ int main()
             printf("Deleting from the location...\n");
             printf("Choose the location, ");
             loc = takeinput();
-            delete_from_location(start, loc);
+            delete_from_location(loc);
             printf("\n\n");
             break;
         }
         case 8:
-            count_nodes(start);
+            count_nodes();
             printf("\n\n");
             break;
         case 9:
             printf("Reversing the linked list");
-            reverse_linked_list(&start);
-            display(start);
+            reverse_linked_list();
+            display();
             printf("\n\n");
             break;
         case 10:
@@ -307,22 +274,5 @@ int main()
             return 0;
         }
     };
-
-    // insertatend(start, 20);
-    // insertatend(start, 21);
-    // insertatend(start, 28);
-    // insert_at_location(start, 2, 9);
-    // reverse_linked_list(start);
-
-    // // delete_at_end(start);
-    // // delete_at_location(start, 3);
-
-    // // not working
-    // //  insert_at_beginning(start, 8);
-    // //  delete_at_beginning(start);
-
-    // display(start);
-    // count_nodes(start);
-
     return 0;
 }
