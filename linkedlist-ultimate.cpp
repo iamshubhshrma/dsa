@@ -77,7 +77,6 @@ void delete_from_end()
     else if (start->next == NULL)
     {
         start = NULL;
-        free(start);
     }
     else
     {
@@ -98,6 +97,10 @@ void delete_from_beginning()
     {
         printf("\n\nThe linked list is empty\n\n");
         return;
+    }
+    else if (start->next == NULL)
+    {
+        start = NULL;
     }
     else
     {
