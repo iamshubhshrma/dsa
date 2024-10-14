@@ -9,11 +9,25 @@ struct stack
 
 void pop(struct stack *s)
 {
-    printf("popped");
+    if (s->top == -1)
+    {
+        printf("Stack is empty, nothing to pop!\n");
+    }
+    else
+    {
+        printf("Popped element: %d\n", s->a[s->top]);
+        s->top--;
+    }
 }
 
 void display(struct stack *s)
 {
+    if (s->top == -1)
+    {
+        printf("Stack is empty!\n");
+        return;
+    }
+    printf("Stack elements:\n");
     for (int i = s->top; i >= 0; i--)
     {
         printf("%d \n", s->a[i]);
@@ -44,9 +58,10 @@ int takeinput()
 int main()
 {
     struct stack sv;
+    sv.top = -1;
     while (1)
     {
-        printf("What do you want to do? \nChoose your option \n1 - Display the stack\n2 - Push to the stack\n3 - Pop the top element\n4 - Insert at a specific location\n5 - Delete from the beginning\n6 - Delete from the end\n7 - Delete from a specific location\n8 - Count the number of nodes\n9 - Reverse the linked list\n10 - Exit\n");
+        printf("What do you want to do? \nChoose your option \n1 - Display the stack\n2 - Push to the stack\n3 - Pop the top element\n4 - Exit\n");
         int ch = takeinput();
         int loc, num;
         switch (ch)
@@ -111,7 +126,7 @@ int main()
         //     display(start);
         //     printf("\n\n");
         //     break;
-        case 10:
+        case 4:
             printf("\n\n\nProgram execution complete\n\n\n");
             return 0;
         }
