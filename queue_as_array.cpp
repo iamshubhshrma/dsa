@@ -17,12 +17,25 @@ void insert(struct queue *q, int data)
     else
     {
         q->rear++;
+        q->a[q->rear] = data;
+        if (q->front == -1)
+        {
+            q->front = 0;
+        }
+    }
+}
+
+void display(struct queue *q)
+{
+    for (int i = 0; i <= q->rear; i++)
+    {
+        printf("d%", q->a[q->front]);
     }
 }
 
 int main()
 {
-    struct queue *myq = (struct queue *)malloc(sizeof(struct queue));
-    myq->rear = -1;
-    myq->front = -1;
+    struct queue myq;
+    myq.rear = -1;
+    myq.front = -1;
 }

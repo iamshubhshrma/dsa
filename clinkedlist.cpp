@@ -197,7 +197,7 @@ int takeinput()
 int main()
 {
     // Write C++ code here
-    printf("linked list program : \n");
+    printf("Circular linked list program : \n");
     while (1)
     {
         printf("What do you want to do? \nChoose your option \n1 - Display Circular linked list\n2 - Insert at the beginning\n3 - Insert at the end\n4 - Insert at a specific location\n5 - Delete from the beginning\n6 - Delete from the end\n7 - Delete from a specific location\n8 - Count the number of nodes\n9 - Exit\n");

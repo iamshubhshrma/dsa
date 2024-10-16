@@ -27,10 +27,13 @@ void display(struct stack *s)
         printf("Stack is empty!\n");
         return;
     }
-    printf("Stack elements:\n");
-    for (int i = s->top; i >= 0; i--)
+    else
     {
-        printf("%d \n", s->a[i]);
+        printf("Stack elements:\n");
+        for (int i = s->top; i >= 0; i--)
+        {
+            printf("%d \n", s->a[i]);
+        }
     }
 }
 

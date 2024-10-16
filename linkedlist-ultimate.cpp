@@ -6,7 +6,7 @@ struct node
     struct node *next;
 };
 
-struct node *start;
+struct node *start = NULL;
 
 void insertatend(int data)
 {

@@ -42,12 +42,15 @@ void display()
     {
         printf("Stack is empty\n");
     }
-    struct node *ptr = top;
-    printf("\n\n\nDisplaying the Stack....\n");
-    while (ptr != NULL)
+    else
     {
-        printf("%d  \n", ptr->data);
-        ptr = ptr->next;
+        struct node *ptr = top;
+        printf("\n\n\nDisplaying the Stack....\n");
+        while (ptr != NULL)
+        {
+            printf("%d  \n", ptr->data);
+            ptr = ptr->next;
+        }
     }
 }
 
