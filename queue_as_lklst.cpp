@@ -92,7 +92,8 @@ int main()
         case 2:
         {
             printf("\n\n");
-            printf("Inserting in Queue...\n");
+            .l̥
+                printf("Inserting in Queue...\n");
             int num1 = takeinput();
             insert(&q, num1);
             printf("\n\n");
