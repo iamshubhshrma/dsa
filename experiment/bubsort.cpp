@@ -1,26 +1,17 @@
-// Bubble sort in C
-
 #include <stdio.h>
-
-// perform the bubble sort
 void bubbleSort(int array[], int size)
 {
-
-    // loop to access each array element
+    // Outer loop to control the number of passes
     for (int step = 0; step < size - 1; ++step)
     {
-
-        // loop to compare array elements
+        // Inner loop to compare and swap adjacent elements
         for (int i = 0; i < size - step - 1; ++i)
         {
-
-            // compare two adjacent elements
-            // change > to < to sort in descending order
+            // Compare two adjacent elements
+            // Swap if the current element is greater than the next (for ascending order)
             if (array[i] > array[i + 1])
             {
-
-                // swapping occurs if elements
-                // are not in the intended order
+                // Temporary variable for swapping
                 int temp = array[i];
                 array[i] = array[i + 1];
                 array[i + 1] = temp;
@@ -28,8 +19,7 @@ void bubbleSort(int array[], int size)
         }
     }
 }
-
-// print array
+// Function to print the elements of an array
 void printArray(int array[], int size)
 {
     for (int i = 0; i < size; ++i)
@@ -41,13 +31,17 @@ void printArray(int array[], int size)
 
 int main()
 {
+    // Initialize an array with unsorted data
     int data[] = {-2, 45, 0, 11, -9};
 
-    // find the array's length
+    // Calculate the number of elements in the array
     int size = sizeof(data) / sizeof(data[0]);
+    printf("Unsorted Array\n");
+    printArray(data, size);
+    bubbleSort(data, size); // Perform bubble sort on the array
 
-    bubbleSort(data, size);
-
+    // Display the sorted array
     printf("Sorted Array in Ascending Order:\n");
     printArray(data, size);
+    return 0; // Indicate successful program termination
 }

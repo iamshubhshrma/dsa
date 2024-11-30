@@ -1,89 +1,67 @@
-// Quick sort in C
-
+// Quick sort implementation
 #include <stdio.h>
-
-// function to swap elements
+// Function to swap two elements in an array
 void swap(int *a, int *b)
 {
-    int t = *a;
-    *a = *b;
-    *b = t;
+    int t = *a; // Store the value of the first element in a temporary variable
+    *a = *b;    // Assign the value of the second element to the first
+    *b = t;     // Assign the value of the temporary variable to the second element
 }
 
-// function to find the partition position
+// Function to partition the array based on a pivot element
 int partition(int array[], int low, int high)
 {
+    int pivot = array[high]; // Select the rightmost element as the pivot
+    int i = (low - 1);       // Pointer for the smaller element
 
-    // select the rightmost element as pivot
-    int pivot = array[high];
-
-    // pointer for greater element
-    int i = (low - 1);
-
-    // traverse each element of the array
-    // compare them with the pivot
+    // Iterate through the array, comparing elements with the pivot
     for (int j = low; j < high; j++)
     {
-        if (array[j] <= pivot)
+        if (array[j] <= pivot) // If the current element is smaller than or equal to the pivot
         {
-
-            // if element smaller than pivot is found
-            // swap it with the greater element pointed by i
-            i++;
-
-            // swap element at i with element at j
-            swap(&array[i], &array[j]);
+            i++;                        // Increment the smaller element pointer
+            swap(&array[i], &array[j]); // Swap the elements
         }
     }
 
-    // swap the pivot element with the greater element at i
+    // Place the pivot element at the correct position
     swap(&array[i + 1], &array[high]);
-
-    // return the partition point
-    return (i + 1);
+    return (i + 1); // Return the partition index
 }
 
+// Recursive function to perform Quick Sort
 void quickSort(int array[], int low, int high)
 {
-    if (low < high)
+    if (low < high) // Base case: Stop when the array has one or zero elements
     {
+        int pi = partition(array, low, high); // Partition the array and get the pivot index
 
-        // find the pivot element such that
-        // elements smaller than pivot are on left of pivot
-        // elements greater than pivot are on right of pivot
-        int pi = partition(array, low, high);
-
-        // recursive call on the left of pivot
-        quickSort(array, low, pi - 1);
-
-        // recursive call on the right of pivot
-        quickSort(array, pi + 1, high);
+        quickSort(array, low, pi - 1);  // Recursively sort the left subarray
+        quickSort(array, pi + 1, high); // Recursively sort the right subarray
     }
 }
 
-// function to print array elements
+// Function to print elements of an array
 void printArray(int array[], int size)
 {
     for (int i = 0; i < size; ++i)
     {
-        printf("%d  ", array[i]);
+        printf("%d  ", array[i]); // Print each element followed by a space
     }
-    printf("\n");
+    printf("\n"); // Add a newline at the end
 }
 
-// main function
+// Driver function to test the Quick Sort algorithm
 int main()
 {
-    int data[] = {8, 7, 2, 1, 0, 9, 6};
-
-    int n = sizeof(data) / sizeof(data[0]);
+    int data[] = {8, 7, 2, 1, 0, 9, 6};     // Define an unsorted array
+    int n = sizeof(data) / sizeof(data[0]); // Calculate the size of the array
 
     printf("Unsorted Array\n");
-    printArray(data, n);
+    printArray(data, n); // Display the unsorted array
 
-    // perform quicksort on data
-    quickSort(data, 0, n - 1);
+    quickSort(data, 0, n - 1); // Perform Quick Sort
 
     printf("Sorted array in ascending order: \n");
-    printArray(data, n);
+    printArray(data, n); // Display the sorted array
 }
